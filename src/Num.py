@@ -13,6 +13,8 @@ class Num:
         self.hi = -1 * float("inf")
         self.lo = float("inf")
 
+        self.heaven = 0 if "-" in s else 1
+
     def add(self, value: float) -> None:
         """Includes a value in the column.
 

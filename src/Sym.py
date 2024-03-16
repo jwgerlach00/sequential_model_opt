@@ -7,7 +7,7 @@ class Sym:
         self.at = n if n else 0
         self.n = 0
         self.has = {}
-        self.mode = None
+        self.mode = -1 * float("inf")
         self.most = 0
 
     def add(self, value: str) -> None:
@@ -31,6 +31,14 @@ class Sym:
             if self.has[value] > self.mode:
                 self.mode = value
                 self.most = self.has[value]
+
+    def mid(self) -> int:
+        """Returns mode.
+
+        Returns:
+            float: Mode
+        """
+        return self.mode
 
     def div(self) -> float:
         """Returns entropy.
