@@ -14,7 +14,7 @@ class Num:
         self.lo = float("inf")
 
     def add(self, value: float) -> None:
-        """Includes a value in the stats.
+        """Includes a value in the column.
 
         Args:
             value (float): Value to add
