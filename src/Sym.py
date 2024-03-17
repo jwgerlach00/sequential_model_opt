@@ -1,4 +1,6 @@
 import math
+from typing import Any
+from src.config import config
 
 
 class Sym:
@@ -28,7 +30,7 @@ class Sym:
                 self.has[value] = 1
 
             # Maybe recalculate mode, most
-            if self.has[value] > self.mode:
+            if self.has[value] > self.most:
                 self.mode = value
                 self.most = self.has[value]
 
@@ -52,9 +54,12 @@ class Sym:
             entropy -= p * math.log2(p)
         return entropy
 
-    def like(self, value: str, prior: float) -> float:
-        # implements p(h | e) = (p(e|h) + p(h)) / p(e) NOTE: SOMEHOW???
+    def like(self, value: Any, prior: float) -> float:
+        # implements p(h | e) = (p(e|h) + p(h)) / p(e)
         # Bayesian statistics
-        p_e = self.has[value] if value in self.has else 0
+        p_e_given_h = self.has[value] if value in self.has else 0  # p(e|h)
 
-        return (p_e + prior) / self.n
+        # Formula below: p(e|h) + p(h) normalized (divide by self.n)
+        # since we are comparing classes and normalizing we do not need p(e) because it
+        # will cancel out anyways
+        return (p_e_given_h + config.m * prior) / (self.n + config.m)

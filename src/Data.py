@@ -14,13 +14,23 @@ class Data:
 
         self.adds(src, func)
 
+    def __str__(self) -> str:
+        # Initialize the string with column names
+        s = "\t".join(self.cols.names) + "\n"
+
+        # Iterate through rows and concatenate cell values
+        for row in self.rows.values():
+            s += "\t".join([str(x) for x in row.cells]) + "\n"
+
+        return s
+
     def adds(self, src: Union[str, Dict[int, Any]], func: Optional[Callable]):
         if type(src) == str:
             for _, value in utils.csv(src):
                 self.add(value, func)
         else:
-            for value in src.values():
-                self.add(value, func)
+            # for value in src.values():
+            self.add(src, func)
         return self
 
     def add(self, t: Dict[int, Any], func: Callable) -> None:

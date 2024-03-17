@@ -50,9 +50,9 @@ class Num:
         if self.n < 2:
             return 0
         else:
-            (self.m2 / (self.n - 1)) ** 0.5  # std formula, why self.n - 1?
+            return (self.m2 / (self.n - 1)) ** 0.5  # std formula
 
-    def like(self, value: float) -> float:
+    def like(self, value: float, _) -> float:
         """Likelihood of value in distribution assuming normal distribution.
 
         Args:
@@ -62,6 +62,7 @@ class Num:
             float: "Likelihood"
         """
         mu = self.mu
+        print(type(self.div()))
         std = self.div() + 1e-30  # add to avoid 0
         distance_from_mu = value - mu
 
