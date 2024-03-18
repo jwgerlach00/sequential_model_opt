@@ -1,5 +1,5 @@
 import fileinput, re, ast
-import random
+import math
 from typing import Any, Iterator, Tuple, List
 
 
@@ -26,6 +26,16 @@ def coerce(s: str) -> Any:
         return ast.literal_eval(s)
     except Exception:
         return s.strip()
+
+
+def sort_by_d2h(rows: dict, data) -> dict:
+    return {
+        i: val
+        for i, val in zip(
+            range(len(rows)),
+            sorted(rows.values(), key=lambda row: row.d2h(data)),
+        )
+    }
 
 
 # def slice(t: list, go: int = None, stop: int = None, inc: int = None) -> list:

@@ -61,12 +61,25 @@ class Num:
         Returns:
             float: "Likelihood"
         """
-        mu = self.mu
-        print(type(self.div()))
+        mu = self.mid()
         std = self.div() + 1e-30  # add to avoid 0
         distance_from_mu = value - mu
 
         numerator = math.e ** (-0.5 * (distance_from_mu**2) / (std**2))
-        denominator = 2.5 * (math.sqrt(2 * math.pi)) + 1e-30
+        denominator = std * (math.sqrt(2 * math.pi)) + 1e-30
 
         return numerator / denominator
+
+    def norm(self, value: float) -> float:
+        """Normalize a value with respect to the column distribution. Uses min max
+        normalization.
+
+        Args:
+            value (float): Value to normalize
+
+        Returns:
+            float: Normalized value
+        """
+        if value == "?":
+            return value
+        return (value - self.lo) / (self.hi - self.lo + 1e-30)  # avoid divide by 0

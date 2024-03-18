@@ -33,8 +33,21 @@ class Row:
             v = self.cells[col.at]
             if v != "?":  # if value is not missing
                 inc = col.like(v, prior)
-                out += math.log(inc)  # log again for small frequency
+                out += math.log(inc) if inc > 0 else 0  # log again for small frequency
         return math.e**out  # undo logs
+
+    def d2h(self, data) -> float:
+        # euclidean distance
+        d = 0
+        n = 0
+
+        for y_col in data.cols.y.values():
+            n += 1
+            d += (
+                y_col.heaven - y_col.norm(self.cells[y_col.at])
+            ) ** 2  # square the difference (no need for abs bc squared)
+
+        return d**0.5 / n**0.5  # divide by n to normalize
 
     # def d2h(self, data: Data, d, n) -> float:
     #     d = 0
